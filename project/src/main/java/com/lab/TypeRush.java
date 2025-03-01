@@ -1,86 +1,57 @@
 package com.lab;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-public class TypeRush implements Runnable {
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new TypeRush());
-    }
-
-    private JScrollPane showScrollPane;
-
-    private JTextArea showTextArea;
-
-
+public class TypeRush extends Application {
 
     @Override
-    public void run() {
-        JFrame frame = new JFrame("pimyada & phimlaphat");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("pimyada & phimlaphat");
 
-        frame.add(createDisplayPanel(), BorderLayout.BEFORE_FIRST_LINE);
-        frame.add(createShowTextPanel(), BorderLayout.BEFORE_LINE_BEGINS);
-       
-        frame.pack();
-        frame.setLocationByPlatform(true);
-        frame.setVisible(true);
-    }
+        BorderPane root = new BorderPane();
+        root.setPadding(new Insets(5));
 
-    private JPanel createDisplayPanel() {
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        Font font = panel.getFont().deriveFont(16f);
+        Label welcomeLabel = new Label("Welcome to TypingBuddy");
+        welcomeLabel.setFont(Font.font(16));
+        BorderPane.setMargin(welcomeLabel, new Insets(5));
+        root.setTop(welcomeLabel);
 
-        JLabel label = new JLabel("Welcome to TypingBuddy");
-        label.setFont(font);
-        panel.add(label);
+        VBox centerPane = new VBox(10);
+        centerPane.setPadding(new Insets(5));
 
-        return panel;
-    }
+        Label titleLabel = new Label("A World of Tales");
+        titleLabel.setFont(Font.font(16));
 
-    private JPanel createShowTextPanel() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        Font font = panel.getFont().deriveFont(16f);
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.LINE_START;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.gridwidth = 1;
-
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        JLabel label = new JLabel("A World of Tales");
-        label.setFont(font);
-        panel.add(label, gbc);
-
-        gbc.gridy++;
-        showTextArea = new JTextArea(10, 40);
+        TextArea showTextArea = new TextArea();
         showTextArea.setEditable(false);
-        showTextArea.setFont(font);
-        showTextArea.setLineWrap(true);
-        showTextArea.setWrapStyleWord(true);
+        showTextArea.setWrapText(true);
+        showTextArea.setFont(Font.font(16));
+        showTextArea.setPrefRowCount(10);
+        showTextArea.setPrefColumnCount(40);
 
-        showScrollPane = new JScrollPane(showTextArea);
-        panel.add(showScrollPane, gbc);
+        ScrollPane scrollPane = new ScrollPane(showTextArea);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setPadding(new Insets(5));
 
-        return panel;
+        centerPane.getChildren().addAll(titleLabel, scrollPane);
+        root.setCenter(centerPane);
+
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
-
-    
-
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
