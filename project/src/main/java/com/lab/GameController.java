@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
 import java.io.BufferedReader;
@@ -23,6 +24,7 @@ public class GameController {
     @FXML private Label resultLabel;
     @FXML private TextArea typingArea;
     @FXML private Button startButton;
+    @FXML private TextField typingField;
 
     private static final List<String> SAMPLE_TEXTS = new ArrayList<>();
     private String currentText;
@@ -61,14 +63,20 @@ public class GameController {
 
             typingArea.setOnKeyReleased(e -> checkCompletion());
 
+            if (timeline != null) {
+                timeline.stop();
+            }
+
             timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-                timeLeft--;
-                timerLabel.setText("Time: " + timeLeft + "s");
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    Platform.runLater(() -> timerLabel.setText("Time: " + timeLeft + "s"));
+                }
                 if (timeLeft <= 0) {
                     endTest();
                 }
             }));
-            timeline.setCycleCount(60);
+            timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
             startButton.setText("Restart");
         } else {
@@ -78,6 +86,9 @@ public class GameController {
 
     private void restartTest() {
         testStarted = false;
+        if (timeline != null) {
+            timeline.stop();
+        }
         startTest();
     }
 
@@ -94,7 +105,9 @@ public class GameController {
     }
 
     private void endTest() {
-        timeline.stop();
+        if (timeline != null) {
+            timeline.stop();
+        }
         typingArea.setDisable(true);
 
         String typedText = typingArea.getText().trim();
@@ -113,7 +126,7 @@ public class GameController {
             }
         }
 
-        int wpm = (correctWords / 5);  
+        int wpm = correctWords / 5;  // คิดเป็นคำต่อนาที (เฉลี่ย 5 ตัวอักษรต่อคำ)
         Platform.runLater(() -> {
             resultLabel.setText("Results: " + wpm + " WPM");
             sampleText.setText(resultText.toString());

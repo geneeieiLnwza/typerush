@@ -1,3 +1,49 @@
+/* ตั้งค่าพื้นหลังของ GridPane */
 #root {
     -fx-background-color: #1A237E;
+}
+
+/* ตั้งค่าสไตล์สำหรับ Label ทั่วไป */
+Label {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+}
+
+/* สไตล์เฉพาะของ Title (Typing Speed Test) */
+#titleLabel {
+    -fx-font-size: 35px;
+    -fx-text-fill: white;
+}
+
+/* สไตล์ของข้อความตัวอย่าง */
+#sampleText {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+}
+
+/* สไตล์ของ TextField (ช่องพิมพ์) */
+#typingField {
+    -fx-font-size: 18px;
+    -fx-alignment: center;
+    -fx-pref-width: 250px;
+    -fx-pref-height: 40px;
+}
+
+/* สไตล์ของปุ่ม Start Test */
+#startButton {
+    -fx-font-size: 18px;
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+}
+
+/* สไตล์ของตัวจับเวลา */
+#timerLabel {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+}
+
+/* สไตล์ของ Label ผลลัพธ์ */
+#resultLabel {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
 }
