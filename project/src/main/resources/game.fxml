@@ -2,12 +2,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 
-<GridPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.GameController"
+
+<GridPane fx:id="root" stylesheets="@css/style.css"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.GameController"
           alignment="CENTER" hgap="10" vgap="10">
 
-    <Label text="Welcome, user!" GridPane.columnIndex="0" GridPane.rowIndex="0"
+
+   <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <ImageView fx:id="keyboardIcon" fitWidth="40" fitHeight="40">
+        <image>
+            <Image url="@images/keyboard.png"/>
+        </image>
+    </ImageView>
+    <Label text="Typing Speed Test"
            style="-fx-font-size: 35px; -fx-text-fill: white;"/>
+</HBox>
+
 
     <Label fx:id="sampleText" text="Type this text..." GridPane.columnIndex="0" GridPane.rowIndex="1"
            style="-fx-font-size: 20px; -fx-text-fill: white;"/>
