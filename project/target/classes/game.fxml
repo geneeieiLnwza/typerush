@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<GridPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.GameController"
+          alignment="CENTER" hgap="10" vgap="10">
+
+    <Label text="Welcome, user!" GridPane.columnIndex="0" GridPane.rowIndex="0"
+           style="-fx-font-size: 35px; -fx-text-fill: white;"/>
+
+    <Label fx:id="sampleText" text="Type this text..." GridPane.columnIndex="0" GridPane.rowIndex="1"
+           style="-fx-font-size: 20px; -fx-text-fill: white;"/>
+
+    <TextArea fx:id="typingArea" GridPane.columnIndex="0" GridPane.rowIndex="2" prefWidth="400" prefHeight="100"/>
+
+    <Button fx:id="startButton" text="Start Test" onAction="#startTest"
+            GridPane.columnIndex="0" GridPane.rowIndex="3"
+            style="-fx-font-size: 18px; -fx-background-color: #007bff; -fx-text-fill: white;"/>
+
+    <Label fx:id="timerLabel" text="Time: 60s" GridPane.columnIndex="0" GridPane.rowIndex="4"
+           style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+
+    <Label fx:id="resultLabel" text="Results will appear here" GridPane.columnIndex="0" GridPane.rowIndex="5"
+           style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+</GridPane>
