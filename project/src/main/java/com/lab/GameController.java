@@ -126,7 +126,7 @@ public class GameController {
             }
         }
 
-        int wpm = correctWords / 5;  // คิดเป็นคำต่อนาที (เฉลี่ย 5 ตัวอักษรต่อคำ)
+        int wpm = correctWords / 5;  
         Platform.runLater(() -> {
             resultLabel.setText("Results: " + wpm + " WPM");
             sampleText.setText(resultText.toString());
