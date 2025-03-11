@@ -29,6 +29,7 @@ public class GameController {
     private int timeLeft = 60;
     private Timeline timeline;
     private Random random = new Random();
+    private boolean testStarted = false;
 
     static {
         loadSampleTexts();
@@ -48,25 +49,36 @@ public class GameController {
 
     @FXML
     private void startTest() {
-        nextSentence();
-        typingArea.setDisable(false);
-        typingArea.setText("");
-        typingArea.requestFocus();
-        timeLeft = 60;
-        timerLabel.setText("Time: " + timeLeft + "s");
-        resultLabel.setText("");
-
-        typingArea.setOnKeyReleased(e -> checkCompletion());
-
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            timeLeft--;
+        if (!testStarted) {
+            testStarted = true;
+            nextSentence();
+            typingArea.setDisable(false);
+            typingArea.setText("");
+            typingArea.requestFocus();
+            timeLeft = 60;
             timerLabel.setText("Time: " + timeLeft + "s");
-            if (timeLeft <= 0) {
-                endTest();
-            }
-        }));
-        timeline.setCycleCount(60);
-        timeline.play();
+            resultLabel.setText("");
+
+            typingArea.setOnKeyReleased(e -> checkCompletion());
+
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+                timeLeft--;
+                timerLabel.setText("Time: " + timeLeft + "s");
+                if (timeLeft <= 0) {
+                    endTest();
+                }
+            }));
+            timeline.setCycleCount(60);
+            timeline.play();
+            startButton.setText("Restart");
+        } else {
+            restartTest();
+        }
+    }
+
+    private void restartTest() {
+        testStarted = false;
+        startTest();
     }
 
     private void nextSentence() {
@@ -101,7 +113,7 @@ public class GameController {
             }
         }
 
-        int wpm = correctWords;
+        int wpm = (correctWords / 5);  
         Platform.runLater(() -> {
             resultLabel.setText("Results: " + wpm + " WPM");
             sampleText.setText(resultText.toString());
