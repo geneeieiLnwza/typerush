@@ -1,26 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
 
-<GridPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.GameController"
-          alignment="CENTER" hgap="10" vgap="10">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-    <Label text="Welcome, user!" GridPane.columnIndex="0" GridPane.rowIndex="0"
-           style="-fx-font-size: 35px; -fx-text-fill: white;"/>
+<GridPane fx:id="root" alignment="CENTER" hgap="10" stylesheets="@css/color.css" vgap="10" 
+          xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" 
+          fx:controller="com.lab.GameController">
 
-    <Label fx:id="sampleText" text="Type this text..." GridPane.columnIndex="0" GridPane.rowIndex="1"
-           style="-fx-font-size: 20px; -fx-text-fill: white;"/>
+   <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <ImageView fx:id="keyboardIcon" fitHeight="40" fitWidth="40">
+         <image>
+            <Image url="@images/keyboardIcon.png" />
+         </image> 
+      </ImageView>
+      <Label fx:id="titleLabel" text="Typing Speed Test" />
+   </HBox>
+       
+   <Label fx:id="sampleText" prefHeight="26.0" prefWidth="398.0" GridPane.rowIndex="2" text="Welcome " />
 
-    <TextArea fx:id="typingArea" GridPane.columnIndex="0" GridPane.rowIndex="2" prefWidth="400" prefHeight="100"/>
+   <TextField fx:id="typingField" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
-    <Button fx:id="startButton" text="Start Test" onAction="#startTest"
-            GridPane.columnIndex="0" GridPane.rowIndex="3"
-            style="-fx-font-size: 18px; -fx-background-color: #007bff; -fx-text-fill: white;"/>
+   <Button fx:id="startButton" onAction="#startTest" text="Start Test" GridPane.rowIndex="4" />
 
-    <Label fx:id="timerLabel" text="Time: 60s" GridPane.columnIndex="0" GridPane.rowIndex="4"
-           style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+   <Label fx:id="timerLabel" text="Time: 60s" GridPane.rowIndex="5" />
 
-    <Label fx:id="resultLabel" text="Results will appear here" GridPane.columnIndex="0" GridPane.rowIndex="5"
-           style="-fx-font-size: 18px; -fx-text-fill: white;"/>
+   <Label fx:id="resultLabel" text="Results will appear here" GridPane.rowIndex="6" />
+
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
