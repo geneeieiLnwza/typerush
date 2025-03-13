@@ -4,10 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.Duration;
 
 import java.io.BufferedReader;
@@ -22,9 +19,10 @@ public class GameController {
     @FXML private Label sampleText;
     @FXML private Label timerLabel;
     @FXML private Label resultLabel;
-    @FXML private TextArea typingArea;
-    @FXML private Button startButton;
     @FXML private TextField typingField;
+    @FXML private Button startButton;
+    @FXML private ListView<String> textListView;
+    @FXML private TextField textInputField;
 
     private static final List<String> SAMPLE_TEXTS = new ArrayList<>();
     private String currentText;
@@ -44,8 +42,42 @@ public class GameController {
             while ((line = reader.readLine()) != null) {
                 SAMPLE_TEXTS.add(line.trim());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Warning: text.csv not found or unreadable.");
+        }
+    }
+
+    @FXML
+    private void showResults() {
+        resultLabel.setText("Results are displayed here!");
+    }
+
+    @FXML
+    private void onAddText() {
+        String newText = textInputField.getText().trim();
+        if (!newText.isEmpty()) {
+            SAMPLE_TEXTS.add(newText);
+            textListView.getItems().add(newText);
+            textInputField.clear();
+        }
+    }
+
+    @FXML
+    private void onEditText() {
+        int selectedIndex = textListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            SAMPLE_TEXTS.set(selectedIndex, textInputField.getText().trim());
+            textListView.getItems().set(selectedIndex, textInputField.getText().trim());
+            textInputField.clear();
+        }
+    }
+
+    @FXML
+    private void onDeleteText() {
+        int selectedIndex = textListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            SAMPLE_TEXTS.remove(selectedIndex);
+            textListView.getItems().remove(selectedIndex);
         }
     }
 
@@ -54,14 +86,14 @@ public class GameController {
         if (!testStarted) {
             testStarted = true;
             nextSentence();
-            typingArea.setDisable(false);
-            typingArea.setText("");
-            typingArea.requestFocus();
+            typingField.setDisable(false);
+            typingField.setText("");
+            typingField.requestFocus();
             timeLeft = 60;
             timerLabel.setText("Time: " + timeLeft + "s");
             resultLabel.setText("");
 
-            typingArea.setOnKeyReleased(e -> checkCompletion());
+            typingField.setOnKeyReleased(e -> checkCompletion());
 
             if (timeline != null) {
                 timeline.stop();
@@ -93,13 +125,17 @@ public class GameController {
     }
 
     private void nextSentence() {
+        if (SAMPLE_TEXTS.isEmpty()) {
+            sampleText.setText("No text available.");
+            return;
+        }
         currentText = SAMPLE_TEXTS.get(random.nextInt(SAMPLE_TEXTS.size()));
         sampleText.setText(currentText);
-        typingArea.setText("");
+        typingField.setText("");
     }
 
     private void checkCompletion() {
-        if (typingArea.getText().trim().equals(currentText)) {
+        if (typingField.getText().trim().equals(currentText)) {
             nextSentence();
         }
     }
@@ -108,9 +144,9 @@ public class GameController {
         if (timeline != null) {
             timeline.stop();
         }
-        typingArea.setDisable(true);
+        typingField.setDisable(true);
 
-        String typedText = typingArea.getText().trim();
+        String typedText = typingField.getText().trim();
         String[] words = typedText.split("\\s+");
         int correctWords = 0;
 
@@ -126,7 +162,7 @@ public class GameController {
             }
         }
 
-        int wpm = correctWords / 5;  
+        int wpm = correctWords / 5;
         Platform.runLater(() -> {
             resultLabel.setText("Results: " + wpm + " WPM");
             sampleText.setText(resultText.toString());

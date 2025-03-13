@@ -9,10 +9,15 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class TypingApp extends Application {
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/game.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/game.fxml")));
+        Parent root = loader.load();
+
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm()); // ✅ โหลด CSS
+
         primaryStage.setTitle("Typing Speed Test");
         primaryStage.setScene(scene);
         primaryStage.show();

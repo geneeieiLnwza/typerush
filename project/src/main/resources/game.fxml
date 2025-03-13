@@ -1,48 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<GridPane fx:id="root" stylesheets="@css/style.css"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.GameController"
+          alignment="CENTER" hgap="10" vgap="10">
 
-<GridPane fx:id="root" alignment="CENTER" hgap="10" stylesheets="@css/color.css" vgap="10" 
-          xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" 
-          fx:controller="com.lab.GameController">
+    <!-- หัวข้อหลักและไอคอน -->
+    <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <ImageView fx:id="keyboardIcon" fitWidth="40" fitHeight="40">
+            <image>
+                <Image url="@images/keyboard.png"/>
+            </image>
+        </ImageView>
+        <Label fx:id="titleLabel" text="Typing Speed Test"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    </HBox>
 
-   <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
-      <ImageView fx:id="keyboardIcon" fitHeight="40" fitWidth="40">
-         <image>
-            <Image url="@images/keyboardIcon.png" />
-         </image> 
-      </ImageView>
-      <Label fx:id="titleLabel" text="Typing Speed Test" />
-   </HBox>
-       
-   <Label fx:id="sampleText" prefHeight="26.0" prefWidth="398.0" GridPane.rowIndex="2" text="Welcome " />
+    <!-- ข้อความตัวอย่างที่ต้องพิมพ์ -->
+    <Label fx:id="sampleText" text="Type this text..."
+           GridPane.columnIndex="0" GridPane.rowIndex="1"
+           style="-fx-font-size: 18px;"/>
 
-   <TextField fx:id="typingField" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <!-- ช่องพิมพ์ -->
+    <TextField fx:id="typingField" GridPane.columnIndex="0" GridPane.rowIndex="2"
+               prefWidth="250" prefHeight="40"
+               style="-fx-font-size: 16px;"/>
 
-   <Button fx:id="startButton" onAction="#startTest" text="Start Test" GridPane.rowIndex="4" />
+    <!-- ปุ่มเริ่มต้น -->
+    <Button fx:id="startButton" text="Start Test" onAction="#startTest"
+            GridPane.columnIndex="0" GridPane.rowIndex="3"
+            style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 16px;"/>
 
-   <Label fx:id="timerLabel" text="Time: 60s" GridPane.rowIndex="5" />
+    <!-- ปุ่มดูผลลัพธ์ -->
+    <Button fx:id="viewResultsButton" text="View Results" onAction="#showResults"
+            GridPane.columnIndex="0" GridPane.rowIndex="4"
+            style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-size: 16px;"/>
 
-   <Label fx:id="resultLabel" text="Results will appear here" GridPane.rowIndex="6" />
+    <!-- ตัวจับเวลา -->
+    <Label fx:id="timerLabel" text="Time: 60s"
+           GridPane.columnIndex="0" GridPane.rowIndex="5"
+           style="-fx-font-size: 16px;"/>
 
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
+    <!-- ส่วนเพิ่ม/แก้ไข/ลบข้อความ -->
+    <HBox spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="6">
+        <TextField fx:id="textInputField" promptText="พิมพ์ข้อความที่ต้องการเพิ่ม" prefWidth="300"/>
+
+        <Button fx:id="addTextButton" text="add" onAction="#onAddText"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+
+        <Button fx:id="editTextButton" text="edit" onAction="#onEditText"
+                style="-fx-background-color: #FFC107; -fx-text-fill: black;"/>
+
+        <Button fx:id="deleteTextButton" text="delete" onAction="#onDeleteText"
+                style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+    </HBox>
+
+    <!-- รายการข้อความที่มีอยู่ -->
+    <ListView fx:id="textListView" GridPane.columnIndex="0" GridPane.rowIndex="7"
+              prefHeight="150" prefWidth="400"/>
+   
 </GridPane>
