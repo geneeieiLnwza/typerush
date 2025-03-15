@@ -12,6 +12,7 @@ public class TypingApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/game.fxml")));
         Parent root = loader.load();
 
@@ -20,6 +21,9 @@ public class TypingApp extends Application {
 
         primaryStage.setTitle("Typing Speed Test");
         primaryStage.setScene(scene);
+        primaryStage.setWidth(600);
+        primaryStage.setHeight(400);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

@@ -1,3 +1,4 @@
-com/lab/GameController.class
-com/lab/TypingApp.class
-com/lab/App.class
+com\lab\App.class
+com\lab\GameController$1.class
+com\lab\TypingApp.class
+com\lab\GameController.class

@@ -43,22 +43,15 @@
            GridPane.columnIndex="0" GridPane.rowIndex="5"
            style="-fx-font-size: 16px;"/>
 
-    <!-- ส่วนเพิ่ม/แก้ไข/ลบข้อความ -->
-    <HBox spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="6">
-        <TextField fx:id="textInputField" promptText="พิมพ์ข้อความที่ต้องการเพิ่ม" prefWidth="300"/>
+    <!-- ผลลัพธ์ -->
+    <Label fx:id="resultLabel" text="Results are displayed here!" 
+           GridPane.columnIndex="0" GridPane.rowIndex="6"
+           style="-fx-font-size: 16px;"/>
 
-        <Button fx:id="addTextButton" text="add" onAction="#onAddText"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    <!-- ปุ่ม Manage Texts (อยู่ทางขวาใต้ผลลัพธ์) -->
+    <Button fx:id="manageTextsButton" text="Manage Texts" onAction="#switchToManageTexts"
+        GridPane.columnIndex="1" GridPane.rowIndex="6"
+        style="-fx-background-color: #673AB7; -fx-text-fill: white; -fx-font-size: 14px;"/>
 
-        <Button fx:id="editTextButton" text="edit" onAction="#onEditText"
-                style="-fx-background-color: #FFC107; -fx-text-fill: black;"/>
-
-        <Button fx:id="deleteTextButton" text="delete" onAction="#onDeleteText"
-                style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
-    </HBox>
-
-    <!-- รายการข้อความที่มีอยู่ -->
-    <ListView fx:id="textListView" GridPane.columnIndex="0" GridPane.rowIndex="7"
-              prefHeight="150" prefWidth="400"/>
-   
 </GridPane>
+
