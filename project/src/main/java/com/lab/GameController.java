@@ -47,6 +47,8 @@ public class GameController {
     private boolean testStarted = false;
     private long startTime; // เวลาที่เริ่มพิมพ์จริง
     private int correctWords = 0; // คำที่พิมพ์ถูกต้องจริง ๆ
+    private int totalTypedWords = 0;
+    private int mistakeCount = 0;
 
     static {
         loadSampleTexts();
@@ -88,6 +90,8 @@ public class GameController {
         if (!testStarted) {
             testStarted = true;
             correctWords = 0;
+            totalTypedWords = 0;
+            mistakeCount = 0;
             startTime = System.currentTimeMillis(); // จับเวลาเริ่มต้น
             nextSentence();
             typingField.setDisable(false);
@@ -158,11 +162,17 @@ public class GameController {
     // ตรวจสอบว่าผู้ใช้พิมพ์ถูกต้องหรือไม่
     private void checkCompletion() {
         String typedText = typingField.getText().trim();
-        String[] typedWords = typedText.split("\\s+");
-        String[] correctWordsArray = currentText.split("\\s+");
-
+    
+        if (currentText.startsWith(typedText)) {
+            // พิมพ์อยู่ยังไม่ทำอะไร
+        } else {
+            mistakeCount++; // ถ้าไม่ใช่คำขึ้นต้นถือว่าพิมพ์ผิด เพิ่ม mistake
+        }
+    
         if (typedText.equals(currentText)) {
-            correctWords += correctWordsArray.length;
+            String[] words = typedText.split("\\s+");
+            correctWords += words.length;
+            totalTypedWords += words.length;
             nextSentence();
         }
     }
@@ -202,16 +212,21 @@ public class GameController {
             timeline.stop();
         }
         typingField.setDisable(true);
-
-        long elapsedTime = (System.currentTimeMillis() - startTime) / 1000; // เวลาที่ใช้จริง
+    
+        long elapsedTime = (System.currentTimeMillis() - startTime) / 1000;
         if (elapsedTime == 0)
-            elapsedTime = 1; // ป้องกันหารด้วยศูนย์
-
-        int wpm = (int) ((correctWords * 60) / elapsedTime); // คำนวณ WPM อย่างแม่นยำ
-
+            elapsedTime = 1;
+    
+        int wpm = (int) ((correctWords * 60) / elapsedTime);
+        int total = totalTypedWords == 0 ? correctWords : totalTypedWords;
+        double baseScore = ((double) correctWords / total) * 100;
+        double penalty = Math.min(mistakeCount * 5, 50); // หัก max 50%
+        int finalScore = (int) Math.max(0, baseScore - penalty);
+    
         Platform.runLater(() -> {
-            resultLabel.setText("Results: " + wpm + " WPM");
+            resultLabel.setText("Results: " + wpm + " WPM | Score: " + finalScore + "%");
             sampleText.setText("Test Finished!");
         });
     }
+    
 }
