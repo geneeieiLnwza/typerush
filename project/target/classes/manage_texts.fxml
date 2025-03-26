@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="root" stylesheets="@css/style.css"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.ManageTextsController"
+          alignment="CENTER" hgap="10" vgap="10">
+
+    <Label text="Manage Texts" style="-fx-font-size: 20px; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
+    <TextField fx:id="textInputField" promptText="พิมพ์ข้อความที่ต้องการเพิ่ม" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+    <!--ปรับตำแหน่งปุ่มให้อยู่ใน HBox (เรียงแนวนอน) -->
+    <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="2">
+        <Button fx:id="addTextButton" text="Add" onAction="#onAddText"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button fx:id="editTextButton" text="Edit" onAction="#onEditText"
+                style="-fx-background-color: #FFC107; -fx-text-fill: black;"/>
+        <Button fx:id="deleteTextButton" text="Delete" onAction="#onDeleteText"
+                style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+    </HBox>
+
+    <!-- เพิ่มเส้นขอบให้ ListView -->
+    <ListView fx:id="textListView" GridPane.columnIndex="0" GridPane.rowIndex="3" prefHeight="200"
+              style="-fx-background-color: white; -fx-border-color: blue; -fx-border-width: 2px;"/>
+
+    <!-- เพิ่มปุ่ม Back -->
+    <Button fx:id="backButton" text="Back" onAction="#switchToGameScene"
+            GridPane.columnIndex="0" GridPane.rowIndex="4"
+            style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+</GridPane>
