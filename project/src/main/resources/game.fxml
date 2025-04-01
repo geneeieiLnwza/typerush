@@ -2,6 +2,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
+
 
 <GridPane fx:id="root" stylesheets="@css/style.css"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.GameController"
@@ -19,14 +22,19 @@
     </HBox>
 
     <!-- ข้อความตัวอย่างที่ต้องพิมพ์ -->
-    <Label fx:id="sampleText" text="Type this text..."
-           GridPane.columnIndex="0" GridPane.rowIndex="2"
-           style="-fx-font-size: 18px;"/>
+   <TextFlow fx:id="sampleTextFlow"
+          GridPane.columnIndex="0" GridPane.rowIndex="2"
+          style="-fx-background-color: #1e1e1e; -fx-padding: 16px; -fx-border-color: #dbd7d7; -fx-border-width: 1px; -fx-background-radius: 8px; -fx-border-radius: 8px;">
+    <Text text="Warm up your fingers..." style="-fx-fill: white; -fx-font-size: 18px;"/>
+</TextFlow>
+
+
 
     <!-- ช่องพิมพ์ -->
    <TextArea fx:id="typingField"
           wrapText="true"
           styleClass="typing-area"
+           maxWidth="Infinity"
           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
 

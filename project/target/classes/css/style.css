@@ -1,111 +1,165 @@
-/* ตั้งค่าพื้นหลังของ GridPane */
-#root {
-    -fx-background-color: #000000;
-}
+    /* ตั้งค่าพื้นหลังของ GridPane */
+    #root {
+        -fx-background-color: #000000;
+    }
 
-/* ตั้งค่าสไตล์สำหรับ Label ทั่วไป */
-Label {
+    /* ตั้งค่าสไตล์สำหรับ Label ทั่วไป */
+    Label {
+        -fx-text-fill: white;
+        -fx-max-width: Infinity;
+    }
+
+    /* สไตล์เฉพาะของ Title (Typing Speed Test) */
+    #titleLabel {
+        -fx-text-fill: white;
+    }
+
+    /* สไตล์ของข้อความตัวอย่าง */
+    /* styles.css */
+    #sampleTextFlow {
+        -fx-font-family: "Roboto Mono", "Vazirmatn", "monospace";
+        -fx-font-size: 18px; /* ประมาณ 1.4rem */
+        -fx-background-color: #1e1e1e; /* แทน var(--card-bg) */
+        -fx-padding: 16px; /* แทน 1rem */
+        -fx-border-color: #dbd7d7; /* แทน var(--border-color) */
+        -fx-border-width: 1px;
+        -fx-border-style: solid;
+        -fx-text-fill: #ffffff;
+        -fx-wrap-text: true;
+        -fx-line-spacing: 4px;
+        -fx-background-radius: 8px;
+        -fx-border-radius: 8px;
+        -fx-pref-width: 800px;
+        -fx-alignment: TOP_LEFT;
+    }
+
+    /* ✅ สไตล์ของ TextArea */
+    .typing-area {
+        -fx-font-family: "Roboto Mono", "Vazirmatn", "monospace";
+        -fx-pref-width: 800px;
+        -fx-pref-height: 40px;
+        -fx-max-height: 200px;
+        -fx-font-size: 12px;
+        -fx-text-alignment: left;
+        -fx-padding: 10px;
+        -fx-background-color: white;
+        -fx-border-color: transparent;
+        -fx-background-insets: 0;
+        -fx-border-insets: 0;
+        -fx-focus-color: transparent;
+        -fx-faint-focus-color: transparent;
+    }
+
+
+
+    /* ✅ ซ่อน scrollbar ทั้งแนวตั้งและแนวนอน */
+    .typing-area .scroll-pane .scroll-bar:vertical,
+    .typing-area .scroll-pane .scroll-bar:horizontal {
+        -fx-opacity: 0;
+        -fx-pref-width: 0;
+        -fx-max-width: 0;
+        -fx-min-width: 0;
+        -fx-pref-height: 0;
+        -fx-max-height: 0;
+        -fx-min-height: 0;
+    }
+    #manageTextsButton{
+    -fx-background-color: #673AB7; 
     -fx-text-fill: white;
-    -fx-max-width: Infinity;
-}
-
-/* สไตล์เฉพาะของ Title (Typing Speed Test) */
-#titleLabel {
-    -fx-text-fill: white;
-}
-
-/* สไตล์ของข้อความตัวอย่าง */
-/* styles.css */
-#sampleText {
-    -fx-font-family: "Roboto Mono", "Vazirmatn", "monospace";
-    -fx-font-size: 18px; /* ประมาณ 1.4rem */
-    -fx-background-color: #1e1e1e; /* แทน var(--card-bg) */
-    -fx-padding: 16px; /* แทน 1rem */
-    -fx-border-color: #dbd7d7; /* แทน var(--border-color) */
-    -fx-border-width: 1px;
-    -fx-border-style: solid;
-    -fx-text-fill: #ffffff;
-    -fx-wrap-text: true;
-    -fx-line-spacing: 4px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-pref-width: 800px;
-    -fx-alignment: TOP_LEFT;
-}
-
-/* ✅ สไตล์ของ TextArea */
-.typing-area {
-    -fx-pref-width: 800px;
-    -fx-pref-height: 40px;
-    -fx-max-height: 200px;
-    -fx-font-size: 16px;
-    -fx-text-alignment: left;
-    -fx-padding: 10px;
-    -fx-background-color: white;
-    -fx-border-color: transparent;
-    -fx-background-insets: 0;
-    -fx-border-insets: 0;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-}
-
-
-
-/* ✅ ซ่อน scrollbar ทั้งแนวตั้งและแนวนอน */
-.typing-area .scroll-pane .scroll-bar:vertical,
-.typing-area .scroll-pane .scroll-bar:horizontal {
-    -fx-opacity: 0;
-    -fx-pref-width: 0;
-    -fx-max-width: 0;
-    -fx-min-width: 0;
-    -fx-pref-height: 0;
-    -fx-max-height: 0;
-    -fx-min-height: 0;
-}
-#manageTextsButton{
--fx-background-color: #673AB7; 
--fx-text-fill: white;
--fx-border-color: #dbd7d7;
--fx-background-radius: 8px;
--fx-border-radius: 8px;
-}
-
-/* สไตล์ของปุ่ม Start Test */
-#startButton {
-    -fx-background-color: #1e1e1e;
-    -fx-text-fill: white;
-    -fx-max-width: Infinity;
     -fx-border-color: #dbd7d7;
     -fx-background-radius: 8px;
     -fx-border-radius: 8px;
-}
+    }
 
-/* สไตล์ของตัวจับเวลา */
-#timerLabel {
-    -fx-text-fill: white;
-}
+    /* สไตล์ของปุ่ม Start Test */
+    #startButton {
+        -fx-background-color: #1e1e1e;
+        -fx-text-fill: white;
+        -fx-max-width: Infinity;
+        -fx-border-color: #dbd7d7;
+        -fx-background-radius: 8px;
+        -fx-border-radius: 8px;
+    }
 
-/* สไตล์ของ Label ผลลัพธ์ */
-#resultLabelwpm {
-    -fx-padding: 8px 16px;                      /* ใกล้เคียงกับ 0.5rem 1rem */
-    -fx-background-color: #1e1e1e;             /* ใช้สีน้ำเงินสด */
-    -fx-border-color: #ccc;                     /* หรือใช้เฉดเทาอ่อน */
-    -fx-border-width: 1px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1); /* box-shadow */
-    -fx-font-weight: 500;                       /* หรือ bold */
-    -fx-text-fill: white;                       /* ถ้าพื้นหลังเข้ม */
-}
+    /* สไตล์ของตัวจับเวลา */
+    #timerLabel {
+        -fx-text-fill: white;
+    }
 
-#resultLabelaccuracy {
-    -fx-padding: 8px 16px;                      /* ใกล้เคียงกับ 0.5rem 1rem */
-    -fx-background-color: #1e1e1e;            /* ใช้สีน้ำเงินสด */
-    -fx-border-color: #ccc;                     /* หรือใช้เฉดเทาอ่อน */
-    -fx-border-width: 1px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1); /* box-shadow */
-    -fx-font-weight: 500;                       /* หรือ bold */
-    -fx-text-fill: white;                       /* ถ้าพื้นหลังเข้ม */
-}
+    /* สไตล์ของ Label ผลลัพธ์ */
+    #resultLabelwpm {
+        -fx-padding: 8px 16px;                      /* ใกล้เคียงกับ 0.5rem 1rem */
+        -fx-background-color: #1e1e1e;             /* ใช้สีน้ำเงินสด */
+        -fx-border-color: #ccc;                     /* หรือใช้เฉดเทาอ่อน */
+        -fx-border-width: 1px;
+        -fx-border-radius: 8px;
+        -fx-background-radius: 8px;
+        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1); /* box-shadow */
+        -fx-font-weight: 500;                       /* หรือ bold */
+        -fx-text-fill: white;                       /* ถ้าพื้นหลังเข้ม */
+    }
+
+    #resultLabelaccuracy {
+        -fx-padding: 8px 16px;                      /* ใกล้เคียงกับ 0.5rem 1rem */
+        -fx-background-color: #1e1e1e;            /* ใช้สีน้ำเงินสด */
+        -fx-border-color: #ccc;                     /* หรือใช้เฉดเทาอ่อน */
+        -fx-border-width: 1px;
+        -fx-border-radius: 8px;
+        -fx-background-radius: 8px;
+        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1); /* box-shadow */
+        -fx-font-weight: 500;                       /* หรือ bold */
+        -fx-text-fill: white;                       /* ถ้าพื้นหลังเข้ม */
+    }
+    .root-pane {
+        -fx-background-color: #1A237E;
+        -fx-padding: 40px;
+        -fx-background-radius: 10px;
+    }
+    /* 🟦 พื้นหลังแบบการ์ด */
+    .card-pane {
+        -fx-background-color: #1E1E1E;
+        -fx-background-radius: 12px;
+        -fx-padding: 30px;
+        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 12, 0.2, 0, 4);
+    }
+
+    /* 🏷️ ชื่อหัวข้อ */
+    .title {
+        -fx-text-fill: white;
+        -fx-font-size: 22px;
+        -fx-font-weight: bold;
+    }
+
+    /* 🟢 ปุ่มสีเขียว */
+    .btn-green {
+        -fx-background-color: #4CAF50;
+        -fx-text-fill: white;
+    }
+
+    /* 🟡 ปุ่มสีเหลือง */
+    .btn-yellow {
+        -fx-background-color: #FFC107;
+        -fx-text-fill: black;
+    }
+
+    /* 🔴 ปุ่มสีแดง */
+    .btn-red {
+        -fx-background-color: #F44336;
+        -fx-text-fill: white;
+    }
+
+    /* 🔵 ปุ่ม Back */
+    .btn-blue {
+        -fx-background-color: #2196F3;
+        -fx-text-fill: white;
+    }
+
+    /* 📜 ListView แบบ custom */
+    .custom-list {
+        -fx-background-color: white;
+        -fx-border-color: #2196F3;
+        -fx-border-width: 2px;
+        -fx-background-radius: 6px;
+        -fx-border-radius: 6px;
+    }
+

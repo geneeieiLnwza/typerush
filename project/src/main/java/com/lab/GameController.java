@@ -13,19 +13,20 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Text;
-
+import javafx.scene.text.TextFlow;
 
 import java.io.*;
 import java.util.*;
 
 public class GameController {
 
-    @FXML private Label sampleText;
     @FXML private Label timerLabel;
     @FXML private TextArea typingField;
     @FXML private Button startButton;
     @FXML private Label resultLabelwpm;
     @FXML private Label resultLabelaccuracy;
+    @FXML private TextFlow sampleTextFlow;
+
 
 
     private static final String BASE_CSV = "text.csv";
@@ -99,22 +100,30 @@ public class GameController {
         List<String> texts = new ArrayList<>();
         loadFromCsv(BASE_CSV, texts);
         loadFromCsv(USER_CSV, texts);
-
+    
         if (texts.isEmpty()) {
-            sampleText.setText("No text available.");
+            sampleTextFlow.getChildren().setAll(new Text("No text available."));
             return;
         }
-
+    
         currentText = texts.get(new Random().nextInt(texts.size()));
-        sampleText.setText(currentText);
+    
+        // ✅ แปลง currentText เป็นตัว ๆ แล้วใส่ใน TextFlow
+        sampleTextFlow.getChildren().clear();
+        for (char c : currentText.toCharArray()) {
+            Text t = new Text(String.valueOf(c));
+            t.setStyle("-fx-fill: white; -fx-font-size: 18px;");
+            sampleTextFlow.getChildren().add(t);
+        }
+    
         typingField.setText("");
-
+    
         System.out.println("\uD83D\uDCC4 Loaded texts:");
         for (String text : texts) {
             System.out.println("\uD83D\uDC49 " + text);
         }
     }
-
+    
     private void loadFromCsv(String path, List<String> list) {
         try {
             InputStream input;
@@ -136,12 +145,25 @@ public class GameController {
     }
 
     private void checkCompletion() {
-        String typedText = typingField.getText().trim();
-
-        if (!currentText.startsWith(typedText)) {
-            mistakeCount++;
+        String typedText = typingField.getText();
+    
+        for (int i = 0; i < sampleTextFlow.getChildren().size(); i++) {
+            Text letter = (Text) sampleTextFlow.getChildren().get(i);
+    
+            if (i < typedText.length()) {
+                char typedChar = typedText.charAt(i);
+                char expectedChar = currentText.charAt(i);
+    
+                if (typedChar == expectedChar) {
+                    letter.setStyle("-fx-fill: #00ff00; -fx-font-size: 18px;"); // เขียว
+                } else {
+                    letter.setStyle("-fx-fill: #ff4444; -fx-font-size: 18px;"); // แดง
+                }
+            } else {
+                letter.setStyle("-fx-fill: white; -fx-font-size: 18px;");
+            }
         }
-
+    
         if (typedText.equals(currentText)) {
             String[] words = typedText.split("\\s+");
             correctWords += words.length;
@@ -149,6 +171,7 @@ public class GameController {
             nextSentence();
         }
     }
+    
 
     private void endTest() {
         if (timeline != null) timeline.stop();
@@ -220,7 +243,7 @@ private void initialize() {
         double baseFontSize = width / 60;
         double bigFontSize = width / 80;
 
-        sampleText.setStyle("-fx-font-size: " + bigFontSize + "px;");
+        
         resultLabelwpm.setStyle("-fx-font-size: " + bigFontSize + "px;");
         resultLabelaccuracy.setStyle("-fx-font-size: " + bigFontSize + "px;");
         timerLabel.setStyle("-fx-font-size: " + bigFontSize + "px;");
@@ -260,6 +283,7 @@ private void initialize() {
             Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             currentStage.setScene(new Scene(root));
             currentStage.setTitle("Manage Sample Texts");
+            currentStage.setMaximized(true);
             currentStage.show();
         } catch (IOException e) {
             e.printStackTrace();

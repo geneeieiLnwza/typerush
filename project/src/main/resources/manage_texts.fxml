@@ -2,30 +2,70 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="root" stylesheets="@css/style.css"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.ManageTextsController"
-          alignment="CENTER" hgap="10" vgap="10">
+<StackPane xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.lab.ManageTextsController"
+           stylesheets="@css/style.css">
 
-    <Label text="Manage Texts" style="-fx-font-size: 20px; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <GridPane fx:id="root"
+              alignment="CENTER"
+              maxWidth="600"
+              maxHeight="700"
+              hgap="15" vgap="15"
+              styleClass="card-pane">
 
-    <TextField fx:id="textInputField" promptText="พิมพ์ข้อความที่ต้องการเพิ่ม" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
 
-    <!--ปรับตำแหน่งปุ่มให้อยู่ใน HBox (เรียงแนวนอน) -->
-    <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="2">
-        <Button fx:id="addTextButton" text="Add" onAction="#onAddText"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
-        <Button fx:id="editTextButton" text="Edit" onAction="#onEditText"
-                style="-fx-background-color: #FFC107; -fx-text-fill: black;"/>
-        <Button fx:id="deleteTextButton" text="Delete" onAction="#onDeleteText"
-                style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
-    </HBox>
+        <rowConstraints>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="ALWAYS"/>
+            <RowConstraints vgrow="NEVER"/>
+        </rowConstraints>
 
-    <!-- เพิ่มเส้นขอบให้ ListView -->
-    <ListView fx:id="textListView" GridPane.columnIndex="0" GridPane.rowIndex="3" prefHeight="200"
-              style="-fx-background-color: white; -fx-border-color: blue; -fx-border-width: 2px;"/>
+         <Label text="Manage Texts"
+                 styleClass="title"
+                 GridPane.columnIndex="0"
+                 GridPane.rowIndex="0"
+                 GridPane.halignment="CENTER"
+                 maxWidth="Infinity"
+                style="-fx-alignment: center;"/>
 
-    <!-- เพิ่มปุ่ม Back -->
-    <Button fx:id="backButton" text="Back" onAction="#switchToGameScene"
-            GridPane.columnIndex="0" GridPane.rowIndex="4"
-            style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
-</GridPane>
+
+      <TextField fx:id="textInputField"
+           promptText="พิมพ์ข้อความที่ต้องการเพิ่ม"
+           prefWidth="300"
+           minWidth="200"
+           maxWidth="500"
+           GridPane.columnIndex="0" GridPane.rowIndex="1"
+           GridPane.halignment="CENTER"/>
+
+
+        <HBox spacing="10"
+              GridPane.columnIndex="0" GridPane.rowIndex="2"
+              GridPane.halignment="CENTER"
+               style="-fx-alignment: center;">
+            <Button fx:id="addTextButton" text="Add" onAction="#onAddText"
+                    styleClass="btn-green"/>
+            <Button fx:id="editTextButton" text="Edit" onAction="#onEditText"
+                    styleClass="btn-yellow"/>
+            <Button fx:id="deleteTextButton" text="Delete" onAction="#onDeleteText"
+                    styleClass="btn-red"/>
+        </HBox>
+
+        <ListView fx:id="textListView"
+                  prefHeight="300"
+                  maxHeight="Infinity"
+                  maxWidth="Infinity"
+                  GridPane.columnIndex="0" GridPane.rowIndex="3"
+                  GridPane.halignment="CENTER"
+                  styleClass="custom-list"/>
+
+        <Button fx:id="backButton" text="Back" onAction="#switchToGameScene"
+                styleClass="btn-blue"
+                GridPane.columnIndex="0" GridPane.rowIndex="4"
+                GridPane.halignment="CENTER"/>
+    </GridPane>
+</StackPane>
