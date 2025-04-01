@@ -21,8 +21,8 @@ public class TypingApp extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm()); //ใส่ไฟล์ style.css เพื่อปรับแต่ง ui
 
         // ตั้งชื่อหน้าต่าง แสดงแบบเต็มจอ
-        primaryStage.setTitle("Typing Speed Test"); // หัวข้อ 
-        primaryStage.setScene(scene); //กำหนดฉาก ให้หน้าต่างหลักของแอป
+        primaryStage.setTitle("Typing Speed Test"); 
+        primaryStage.setScene(scene); 
         primaryStage.setMaximized(true); // เปิดเต็มจอตอนเริ่ม
         primaryStage.show(); // แสดงหน้าจอ
     }
