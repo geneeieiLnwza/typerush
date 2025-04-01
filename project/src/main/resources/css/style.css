@@ -1,6 +1,6 @@
 /* ตั้งค่าพื้นหลังของ GridPane */
 #root {
-    -fx-background-color: #1A237E;
+    -fx-background-color: #000000;
 }
 
 /* ตั้งค่าสไตล์สำหรับ Label ทั่วไป */
@@ -62,14 +62,22 @@ Label {
     -fx-max-height: 0;
     -fx-min-height: 0;
 }
-
-
+#manageTextsButton{
+-fx-background-color: #673AB7; 
+-fx-text-fill: white;
+-fx-border-color: #dbd7d7;
+-fx-background-radius: 8px;
+-fx-border-radius: 8px;
+}
 
 /* สไตล์ของปุ่ม Start Test */
 #startButton {
-    -fx-background-color: #007bff;
+    -fx-background-color: #1e1e1e;
     -fx-text-fill: white;
     -fx-max-width: Infinity;
+    -fx-border-color: #dbd7d7;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
 }
 
 /* สไตล์ของตัวจับเวลา */

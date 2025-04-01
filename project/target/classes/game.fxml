@@ -35,10 +35,7 @@
             GridPane.columnIndex="0" GridPane.rowIndex="4"
             style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 16px;"/>
 
-    <!-- ปุ่มดูผลลัพธ์ -->
-    <Button fx:id="viewResultsButton" text="View Results" onAction="#showResults"
-            GridPane.columnIndex="0" GridPane.rowIndex="5"
-            style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-size: 16px;"/>
+ 
 
     <!-- ตัวจับเวลา -->
     <Label fx:id="timerLabel" text="Time: 60s"
@@ -59,7 +56,7 @@
 
     <!-- ปุ่ม Manage Texts (เลื่อนไปแถวถัดไป) -->
 <Button fx:id="manageTextsButton" text="Manage Texts" onAction="#switchToManageTexts"
-        GridPane.columnIndex="1" GridPane.rowIndex="7"
-        style="-fx-background-color: #673AB7; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        GridPane.columnIndex="0" GridPane.rowIndex="5"
+        style=" -fx-font-size: 16px;"/>
 
 </GridPane>
