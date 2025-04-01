@@ -38,7 +38,7 @@
         -fx-alignment: TOP_LEFT;
     }
 
-    /* ✅ สไตล์ของ TextArea */
+    /* สไตล์ของ TextArea */
     .typing-area {
         -fx-font-family: "Roboto Mono", "Vazirmatn", "monospace";
         -fx-pref-width: 800px;
@@ -57,7 +57,7 @@
 
 
 
-    /* ✅ ซ่อน scrollbar ทั้งแนวตั้งและแนวนอน */
+    /* ซ่อน scrollbar ทั้งแนวตั้งและแนวนอน */
     .typing-area .scroll-pane .scroll-bar:vertical,
     .typing-area .scroll-pane .scroll-bar:horizontal {
         -fx-opacity: 0;
@@ -135,7 +135,7 @@
         -fx-background-radius: 10px;
     }
 
-    /* 🟦 พื้นหลังแบบการ์ด */
+    /* พื้นหลังแบบการ์ด */
     .card-pane {
         -fx-background-color: #1E1E1E;
         -fx-background-radius: 12px;
@@ -143,38 +143,38 @@
         -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0.2, 0, 4);
     }
 
-    /* 🏷️ ชื่อหัวข้อ */
+    /* ชื่อหัวข้อ */
     .title {
         -fx-text-fill: white;
         -fx-font-size: 22px;
         -fx-font-weight: bold;
     }
 
-    /* 🟢 ปุ่มสีเขียว */
+    /* ปุ่มสีเขียว */
     .btn-green {
         -fx-background-color: #4CAF50;
         -fx-text-fill: white;
     }
 
-    /* 🟡 ปุ่มสีเหลือง */
+    /* ปุ่มสีเหลือง */
     .btn-yellow {
         -fx-background-color: #FFC107;
         -fx-text-fill: black;
     }
 
-    /* 🔴 ปุ่มสีแดง */
+    /* ปุ่มสีแดง */
     .btn-red {
         -fx-background-color: #F44336;
         -fx-text-fill: white;
     }
 
-    /* 🔵 ปุ่ม Back */
+    /* ปุ่ม Back */
     .btn-blue {
         -fx-background-color: #2196F3;
         -fx-text-fill: white;
     }
 
-    /* 📜 ListView แบบ custom */
+    /* ListView แบบ custom */
     .custom-list {
         -fx-background-color: white;
         -fx-border-color: #2196F3;

@@ -1,70 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- ระบุว่าเป็นไฟล์ XML มาตรฐาน และใช้ UTF-8 สำหรับภาษาไทยได้ -->
+
+<!-- import คลาสต่าง ๆ ที่ใช้ใน FXML เช่น Button, Label, HBox, TextFlow -->
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.text.Text?>
 
-
 <GridPane fx:id="root" stylesheets="@css/style.css"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.GameController"
           alignment="CENTER" hgap="10" vgap="10">
+<!-- 
+    ใช้ GridPane เป็น layout หลัก
+    - fx:id="root" → ผูกกับตัวแปร root ใน controller
+    - stylesheets="@css/style.css" → ใช้ไฟล์ style.css ที่กำหนดเอง
+    - fx:controller="com.lab.GameController" → ผูก FXML นี้กับคลาส GameController
+    - alignment="CENTER" → จัดกึ่งกลางทั้งแนวตั้งและแนวนอน
+    - hgap/vgap → กำหนดระยะห่างแนวนอน/แนวตั้งของ grid -->
 
-    <!-- หัวข้อหลักและไอคอน -->
+    <!-- หัวข้อหลัก + ไอคอน -->
     <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
         <ImageView fx:id="keyboardIcon" fitWidth="40" fitHeight="40">
+            <!-- รูปไอคอน keyboard -->
             <image>
                 <Image url="@images/keyboard.png"/>
+                <!-- รูปภาพจากโฟลเดอร์ resources/images -->
             </image>
         </ImageView>
         <Label fx:id="titleLabel" text="Typing Speed Test"
                style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <!-- ข้อความหัวเรื่องตรงกลาง มีฟอนต์ใหญ่ -->
     </HBox>
 
-    <!-- ข้อความตัวอย่างที่ต้องพิมพ์ -->
+    <!-- กล่องข้อความตัวอย่างที่ต้องพิมพ์ -->
    <TextFlow fx:id="sampleTextFlow"
           GridPane.columnIndex="0" GridPane.rowIndex="2"
           style="-fx-background-color: #1e1e1e; -fx-padding: 16px; -fx-border-color: #dbd7d7; -fx-border-width: 1px; -fx-background-radius: 8px; -fx-border-radius: 8px;">
-    <Text text="Warm up your fingers..." style="-fx-fill: white; -fx-font-size: 18px;"/>
+       <!-- 
+           sampleTextFlow เป็นที่แสดงข้อความประโยคที่ผู้ใช้ต้องพิมพ์
+           ใช้พื้นหลังเทาเข้ม กรอบโค้ง มี padding -->
+       
+       <Text text="Warm up your fingers..." style="-fx-fill: white; -fx-font-size: 18px;"/>
+       <!-- ข้อความเริ่มต้นก่อนจะโหลดคำจริง -->
 </TextFlow>
-
-
 
     <!-- ช่องพิมพ์ -->
    <TextArea fx:id="typingField"
           wrapText="true"
           styleClass="typing-area"
-           maxWidth="Infinity"
+          maxWidth="Infinity"
           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-
+   <!-- 
+        ช่องพิมพ์ข้อความ:
+        - wrapText="true" → ขึ้นบรรทัดใหม่อัตโนมัติ
+        - styleClass="typing-area" → ใช้ CSS class จาก style.css
+        - maxWidth="Infinity" → ขยายตามความกว้าง container -->
 
     <!-- ปุ่มเริ่มต้น -->
     <Button fx:id="startButton" text="Start Test" onAction="#startTest"
             GridPane.columnIndex="0" GridPane.rowIndex="4"
             style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 16px;"/>
+    <!-- 
+        ปุ่มสำหรับเริ่มเกม (หรือ Restart)
+        - onAction="#startTest" → เรียกเมธอด startTest() ใน controller
+    -->
 
- 
-
-    <!-- ตัวจับเวลา -->
+    <!-- แสดงเวลา -->
     <Label fx:id="timerLabel" text="Time: 60s"
            GridPane.columnIndex="0" GridPane.rowIndex="6"
            style="-fx-font-size: 16px;"/>
+    <!-- ป้ายแสดงเวลาที่เหลือระหว่างเกม -->
 
- <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <!-- แสดง WPM -->
-       <Label fx:id="resultLabelwpm" text="Live WPM" 
-              GridPane.columnIndex="0" GridPane.rowIndex="6"
-              style="-fx-font-size: 16px;"/>
+    <!-- แสดงผลลัพธ์: WPM และ Accuracy -->
+    <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <!-- ช่องแสดงผลแบบแนวนอน มีระยะห่าง 10px -->
+        
+        <Label fx:id="resultLabelwpm" text="Live WPM" 
+               GridPane.columnIndex="0" GridPane.rowIndex="6"
+               style="-fx-font-size: 16px;"/>
+        <!-- ป้ายแสดงผล WPM ระหว่างเล่น -->
 
-       <!-- แสดง Accuracy -->
-       <Label fx:id="resultLabelaccuracy" text="Accuracy"
-              GridPane.columnIndex="1" GridPane.rowIndex="6"
-              style="-fx-font-size: 16px;"/>
+        <Label fx:id="resultLabelaccuracy" text="Accuracy"
+               GridPane.columnIndex="1" GridPane.rowIndex="6"
+               style="-fx-font-size: 16px;"/>
+        <!-- ป้ายแสดงความแม่นยำ -->
     </HBox>
 
-    <!-- ปุ่ม Manage Texts (เลื่อนไปแถวถัดไป) -->
-<Button fx:id="manageTextsButton" text="Manage Texts" onAction="#switchToManageTexts"
-        GridPane.columnIndex="0" GridPane.rowIndex="5"
-        style=" -fx-font-size: 16px;"/>
+    <!-- ปุ่มไปหน้า Manage Texts -->
+    <Button fx:id="manageTextsButton" text="Manage Texts" onAction="#switchToManageTexts"
+            GridPane.columnIndex="0" GridPane.rowIndex="5"
+            style=" -fx-font-size: 16px;"/>
+    <!-- 
+        ปุ่มสำหรับเปิดหน้าจัดการข้อความ
+        - onAction="#switchToManageTexts" → เรียกเมธอดใน controller -->
 
 </GridPane>

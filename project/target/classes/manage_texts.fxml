@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- ประกาศว่าเป็นไฟล์ XML ใช้รหัส UTF-8 -->
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<!-- import คอมโพเนนต์ที่ใช้ใน FXML เช่น StackPane, GridPane, Label, Button, ListView -->
 
 <StackPane xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.lab.ManageTextsController"
            stylesheets="@css/style.css">
+<!-- 
+    StackPane เป็น layout หลักของหน้าจอนี้
+    - fx:controller → ผูกกับคลาส ManageTextsController
+    - stylesheets → ใช้ไฟล์ style.css เพื่อปรับแต่งหน้าตา
+-->
 
     <GridPane fx:id="root"
               alignment="CENTER"
@@ -12,49 +20,67 @@
               maxHeight="700"
               hgap="15" vgap="15"
               styleClass="card-pane">
+    <!-- 
+        GridPane เป็น layout ภายใน ใช้แบ่งพื้นที่แบบตาราง
+        - fx:id="root" → ผูกกับตัวแปร root ใน controller (optional)
+        - alignment="CENTER" → จัดตำแหน่งทุกอย่างกึ่งกลาง
+        - hgap/vgap → ระยะห่างระหว่างคอลัมน์และแถว
+        - styleClass="card-pane" → ใช้สไตล์จาก CSS
+    -->
 
+        <!-- กำหนดให้คอลัมน์ขยายได้เต็มพื้นที่ -->
         <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS"/>
         </columnConstraints>
 
+        <!-- กำหนดการขยายแนวตั้งของแต่ละแถว -->
         <rowConstraints>
-            <RowConstraints vgrow="NEVER"/>
-            <RowConstraints vgrow="NEVER"/>
-            <RowConstraints vgrow="NEVER"/>
-            <RowConstraints vgrow="ALWAYS"/>
-            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>  <!-- แถว 0: Title -->
+            <RowConstraints vgrow="NEVER"/>  <!-- แถว 1: TextField -->
+            <RowConstraints vgrow="NEVER"/>  <!-- แถว 2: ปุ่ม Add/Edit/Delete -->
+            <RowConstraints vgrow="ALWAYS"/> <!-- แถว 3: ListView ขยายตามพื้นที่ -->
+            <RowConstraints vgrow="NEVER"/>  <!-- แถว 4: ปุ่ม Back -->
         </rowConstraints>
 
-         <Label text="Manage Texts"
-                 styleClass="title"
-                 GridPane.columnIndex="0"
-                 GridPane.rowIndex="0"
-                 GridPane.halignment="CENTER"
-                 maxWidth="Infinity"
-                style="-fx-alignment: center;"/>
+        <!-- Title -->
+        <Label text="Manage Texts"
+               styleClass="title"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="0"
+               GridPane.halignment="CENTER"
+               maxWidth="Infinity"
+               style="-fx-alignment: center;"/>
+        <!-- แสดงข้อความหัวข้อ "Manage Texts" อยู่กลางหน้าจอ -->
 
+        <!-- ช่องพิมพ์ข้อความ -->
+        <TextField fx:id="textInputField"
+                   promptText="พิมพ์ข้อความที่ต้องการเพิ่ม"
+                   prefWidth="300"
+                   minWidth="200"
+                   maxWidth="500"
+                   GridPane.columnIndex="0" GridPane.rowIndex="1"
+                   GridPane.halignment="CENTER"/>
+        <!-- ช่องให้ผู้ใช้กรอกข้อความที่ต้องการเพิ่มหรือแก้ไข -->
 
-      <TextField fx:id="textInputField"
-           promptText="พิมพ์ข้อความที่ต้องการเพิ่ม"
-           prefWidth="300"
-           minWidth="200"
-           maxWidth="500"
-           GridPane.columnIndex="0" GridPane.rowIndex="1"
-           GridPane.halignment="CENTER"/>
-
-
+        <!-- ปุ่ม Add / Edit / Delete -->
         <HBox spacing="10"
               GridPane.columnIndex="0" GridPane.rowIndex="2"
               GridPane.halignment="CENTER"
-               style="-fx-alignment: center;">
+              style="-fx-alignment: center;">
             <Button fx:id="addTextButton" text="Add" onAction="#onAddText"
                     styleClass="btn-green"/>
+            <!-- ปุ่มเพิ่มข้อความใหม่ เรียก onAddText() -->
+            
             <Button fx:id="editTextButton" text="Edit" onAction="#onEditText"
                     styleClass="btn-yellow"/>
+            <!-- ปุ่มแก้ไขข้อความ เรียก onEditText() -->
+            
             <Button fx:id="deleteTextButton" text="Delete" onAction="#onDeleteText"
                     styleClass="btn-red"/>
+            <!-- ปุ่มลบข้อความ เรียก onDeleteText() -->
         </HBox>
 
+        <!-- รายการข้อความ -->
         <ListView fx:id="textListView"
                   prefHeight="300"
                   maxHeight="Infinity"
@@ -62,10 +88,13 @@
                   GridPane.columnIndex="0" GridPane.rowIndex="3"
                   GridPane.halignment="CENTER"
                   styleClass="custom-list"/>
+        <!-- แสดงรายการข้อความที่เพิ่มไว้ทั้งหมด -->
 
+        <!-- ปุ่มกลับไปหน้าเกม -->
         <Button fx:id="backButton" text="Back" onAction="#switchToGameScene"
                 styleClass="btn-blue"
                 GridPane.columnIndex="0" GridPane.rowIndex="4"
                 GridPane.halignment="CENTER"/>
+        <!-- ปุ่มสำหรับกลับไปหน้าเกม เรียกเมธอด switchToGameScene() -->
     </GridPane>
 </StackPane>
