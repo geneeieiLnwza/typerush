@@ -9,73 +9,76 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.text.Text;
+
 
 import java.io.*;
 import java.util.*;
 
 public class GameController {
 
-    @FXML private Label sampleText;       // ข้อความตัวอย่างให้ผู้ใช้พิมพ์
-    @FXML private Label timerLabel;       // ตัวจับเวลา
-    @FXML private Label resultLabel;      // แสดงผลคะแนน
-    @FXML private TextField typingField;  // ช่องให้พิมพ์
-    @FXML private Button startButton;     // ปุ่มเริ่ม/รีสตาร์ท
+    @FXML private Label sampleText;
+    @FXML private Label timerLabel;
+    @FXML private TextArea typingField;
+    @FXML private Button startButton;
+    @FXML private Label resultLabelwpm;
+    @FXML private Label resultLabelaccuracy;
 
 
-    private static final String BASE_CSV = "text.csv";  // ✅ เพิ่มชื่อไฟล์ base
-
-    
+    private static final String BASE_CSV = "text.csv";
     public static final String USER_CSV = "text_user.csv";
 
-    private String currentText;       // ข้อความปัจจุบันที่กำลังพิมพ์
-    private int timeLeft = 60;        // เวลาเริ่มต้น (60 วินาที)
-    private Timeline timeline;        // ตัวจับเวลาแบบ real-time
-    private boolean testStarted = false; // เช็คว่าเกมเริ่มหรือยัง
-    private long startTime;           // เวลาที่เริ่มพิมพ์
-    private int correctWords = 0;     // คำที่พิมพ์ถูกต้อง
-    private int totalTypedWords = 0;  // คำที่พิมพ์ทั้งหมด
-    private int mistakeCount = 0;     // จำนวนครั้งที่พิมพ์ผิด
-    private final Random random = new Random(); // สำหรับสุ่มข้อความ
-            // ใส่ด้านบนของคลาส
-        private int lastWpm = 0;
-        private int lastScore = 0;
+    private String currentText;
+    private int timeLeft = 60;
+    private Timeline timeline;
+    private boolean testStarted = false;
+    private long startTime;
+    private int correctWords = 0;
+    private int totalTypedWords = 0;
+    private int mistakeCount = 0;
+    private final Random random = new Random();
+    private int lastWpm = 0;
+    private int lastScore = 0;
 
-
-
-    // ✅ เมื่อผู้ใช้กด Start (หรือ Restart) ให้เริ่มเกม
     @FXML
     private void startTest() {
-
-
         if (!testStarted) {
             testStarted = true;
             correctWords = 0;
             totalTypedWords = 0;
             mistakeCount = 0;
-            startTime = System.currentTimeMillis();  // บันทึกเวลาที่เริ่ม
-            nextSentence();                          // แสดงประโยคแรก
+            startTime = System.currentTimeMillis();
+            nextSentence();
             typingField.setDisable(false);
             typingField.setText("");
-            typingField.requestFocus();              // โฟกัสช่องพิมพ์
+            typingField.setPrefHeight(40); // ✅ รีเซ็ตความสูงของ TextArea
+
+            typingField.requestFocus();
             timeLeft = 60;
             timerLabel.setText("Time: " + timeLeft + "s");
-            resultLabel.setText("");
+            resultLabelwpm.setText("");          
+            resultLabelaccuracy.setText("");     
 
-            typingField.setOnKeyReleased(e -> checkCompletion()); // ตรวจทุกครั้งที่ปล่อยปุ่ม
+            typingField.setOnKeyReleased(e -> checkCompletion());
 
             if (timeline != null) {
                 timeline.stop();
             }
 
-            // ✅ ตั้งตัวจับเวลา ถอยหลังทีละ 1 วินาที
             timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-                timeLeft = 60 - (int) ((System.currentTimeMillis() - startTime) / 1000);
+                long elapsed = (System.currentTimeMillis() - startTime) / 1000;
+                timeLeft = 60 - (int) elapsed;
 
-                Platform.runLater(() -> timerLabel.setText("Time: " + timeLeft + "s"));
+                Platform.runLater(() -> {
+                    timerLabel.setText("Time: " + timeLeft + "s");
+                    updateResultsRealtime();
+                });
+
                 if (timeLeft <= 0) {
-                    endTest(); // หมดเวลา
+                    endTest();
                 }
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
@@ -86,82 +89,67 @@ public class GameController {
         }
     }
 
-    // ✅ ถ้ากด Start ใหม่ = รีสตาร์ทเกม
     private void restartTest() {
         testStarted = false;
         if (timeline != null) timeline.stop();
-        startTest(); // เรียกใหม่
+        startTest();
     }
 
-    // ✅ แสดงประโยคใหม่แบบสุ่ม
     private void nextSentence() {
         List<String> texts = new ArrayList<>();
-        loadFromCsv(BASE_CSV, texts);  // ✅ โหลดจาก resources
-        loadFromCsv(USER_CSV, texts);  // ✅ โหลดจาก text_user.csv (แก้ไขได้)
-    
+        loadFromCsv(BASE_CSV, texts);
+        loadFromCsv(USER_CSV, texts);
+
         if (texts.isEmpty()) {
             sampleText.setText("No text available.");
             return;
         }
-    
+
         currentText = texts.get(new Random().nextInt(texts.size()));
         sampleText.setText(currentText);
         typingField.setText("");
-    
-        System.out.println("📄 Loaded texts:");
+
+        System.out.println("\uD83D\uDCC4 Loaded texts:");
         for (String text : texts) {
-            System.out.println("👉 " + text);
+            System.out.println("\uD83D\uDC49 " + text);
         }
     }
-    
 
     private void loadFromCsv(String path, List<String> list) {
         try {
             InputStream input;
             if (path.equals(BASE_CSV)) {
-                input = getClass().getResourceAsStream("/" + path); // ✅ โหลดจาก resources
-                if (input == null) {
-                    System.out.println("🚫 BASE_CSV not found in resources: " + path);
-                    return;
-                }
+                input = getClass().getResourceAsStream("/" + path);
             } else {
-                input = new FileInputStream(path); // ✅ โหลดจาก text_user.csv
+                input = new FileInputStream(path);
             }
-    
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             String line;
             while ((line = reader.readLine()) != null) {
                 list.add(line.trim());
             }
             reader.close();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             System.out.println("⚠️ Error reading file: " + path);
-            e.printStackTrace();
         }
     }
-    
-    
-    
-    
-    
-    
-    // ✅ ตรวจว่าผู้ใช้พิมพ์ครบหรือยัง
+
     private void checkCompletion() {
         String typedText = typingField.getText().trim();
 
         if (!currentText.startsWith(typedText)) {
-            mistakeCount++; // ถ้าเริ่มต้นไม่ตรง ถือว่าผิด
+            mistakeCount++;
         }
 
         if (typedText.equals(currentText)) {
-            String[] words = typedText.split("\\s+"); // นับจำนวนคำ
+            String[] words = typedText.split("\\s+");
             correctWords += words.length;
             totalTypedWords += words.length;
-            nextSentence(); // ไปคำถัดไป
+            nextSentence();
         }
     }
 
-    // ✅ สิ้นสุดการทดสอบ → คำนวณคะแนน
     private void endTest() {
         if (timeline != null) timeline.stop();
         typingField.setDisable(true);
@@ -177,24 +165,71 @@ public class GameController {
 
         lastWpm = wpm;
         lastScore = finalScore;
-
-        Platform.runLater(() -> {
-            resultLabel.setText("Results: " + wpm + " WPM | Score: " + finalScore + "%");
-            sampleText.setText("Test Finished!");
-        });
+        resultLabelwpm.setText("Results: " + wpm + " WPM");
+        resultLabelaccuracy.setText("Score: " + finalScore + "%");
     }
 
-    // ✅ เมื่อกด ENTER → ไปยังประโยคถัดไป
-    @FXML
-    private void initialize() {
-        typingField.setOnKeyPressed(event -> {
-            if (event.getCode().toString().equals("ENTER")) {
-                nextSentence();
+    private void updateResultsRealtime() {
+        long elapsedMillis = System.currentTimeMillis() - startTime;
+        double elapsedMinutes = elapsedMillis / 60000.0;
+
+        String typed = typingField.getText();
+        int correctChars = countCorrectCharacters(currentText, typed);
+        int totalTyped = typed.length();
+
+        int wpm = elapsedMinutes > 0 ? (int) ((correctChars / 5.0) / elapsedMinutes) : 0;
+        double accuracy = totalTyped == 0 ? 100.0 : ((double) correctChars / totalTyped) * 100;
+
+        resultLabelwpm.setText(String.format("Live: %d WPM" , wpm));
+        resultLabelaccuracy.setText(String.format("Accuracy: %.1f%%",accuracy));
+    }
+
+    private int countCorrectCharacters(String expected, String actual) {
+        int correct = 0;
+        int len = Math.min(expected.length(), actual.length());
+        for (int i = 0; i < len; i++) {
+            if (expected.charAt(i) == actual.charAt(i)) {
+                correct++;
             }
-        });
+        }
+        return correct;
     }
 
-    // ✅ เปิดหน้าจอ ManageTextsController
+  @FXML
+private GridPane root; // ← ต้องผูกจาก FXML ด้วย
+
+@FXML
+private void initialize() {
+    // 👆 เมื่อกด Enter ให้เปลี่ยนประโยค
+    typingField.setOnKeyPressed(event -> {
+        if (event.getCode().toString().equals("ENTER")) {
+            nextSentence();
+        }
+    });
+
+    // 👇 ทำให้ TextArea ขยายความสูงอัตโนมัติตามเนื้อหา
+    typingField.textProperty().addListener((obs, oldText, newText) -> {
+        double height = computeTextAreaHeight(typingField);
+        typingField.setPrefHeight(height);
+    });
+
+    // 👇 Responsive font: ฟอนต์ใหญ่ขึ้นตามความกว้างจอ
+    root.widthProperty().addListener((obs, oldVal, newVal) -> {
+        double width = newVal.doubleValue();
+
+        double baseFontSize = width / 60;
+        double bigFontSize = width / 80;
+
+        sampleText.setStyle("-fx-font-size: " + bigFontSize + "px;");
+        resultLabelwpm.setStyle("-fx-font-size: " + bigFontSize + "px;");
+        resultLabelaccuracy.setStyle("-fx-font-size: " + bigFontSize + "px;");
+        timerLabel.setStyle("-fx-font-size: " + bigFontSize + "px;");
+        typingField.setStyle("-fx-font-size: " + baseFontSize + "px;");
+        startButton.setStyle("-fx-font-size: " + baseFontSize + "px;");
+    });
+}
+
+
     @FXML
     private void openManageTexts(ActionEvent event) {
         try {
@@ -203,36 +238,42 @@ public class GameController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Manage Sample Texts");
-            stage.setResizable(false);
+            stage.setMaximized(true); // ✅ เปิดเต็มจอ
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void showResults() {
-    resultLabel.setText("Last Results: " + lastWpm + " WPM | Score: " + lastScore + "%");
-}
-
-@FXML
-private void switchToManageTexts(ActionEvent event) {
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/manage_texts.fxml"));
-        Parent root = loader.load();
-
-        // ✅ ดึง stage เดิมจากปุ่มที่กด
-        Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-
-        currentStage.setScene(new Scene(root));             // ✅ เปลี่ยน scene ใหม่ในหน้าต่างเดิม
-        currentStage.setTitle("Manage Sample Texts");       // ตั้งชื่อใหม่ (optional)
-        currentStage.show();                                // แสดงผล
-    } catch (IOException e) {
-        e.printStackTrace();
+        resultLabelwpm.setText("Last Results: " + lastWpm + " WPM");       // ✅
+        resultLabelaccuracy.setText("Score: " + lastScore + "%"); 
     }
-}
-private String getResourcePath(String filename) {
-    return Objects.requireNonNull(getClass().getResource("/" + filename)).getPath();
-}
 
-
+    @FXML
+    private void switchToManageTexts(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/manage_texts.fxml"));
+            Parent root = loader.load();
+            Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            currentStage.setScene(new Scene(root));
+            currentStage.setTitle("Manage Sample Texts");
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private String getResourcePath(String filename) {
+        return Objects.requireNonNull(getClass().getResource("/" + filename)).getPath();
+    }
+    private double computeTextAreaHeight(TextArea textArea) {
+        Text text = new Text(textArea.getText());
+        text.setFont(textArea.getFont());
+        text.setWrappingWidth(textArea.getWidth() - 20); // เผื่อ padding
+        return text.getLayoutBounds().getHeight() + 30;  // เพิ่มเผื่อ padding
+    }
+    
+}

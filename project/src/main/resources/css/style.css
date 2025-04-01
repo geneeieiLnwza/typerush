@@ -5,45 +5,99 @@
 
 /* ตั้งค่าสไตล์สำหรับ Label ทั่วไป */
 Label {
-    -fx-font-size: 18px;
     -fx-text-fill: white;
+    -fx-max-width: Infinity;
 }
 
 /* สไตล์เฉพาะของ Title (Typing Speed Test) */
 #titleLabel {
-    -fx-font-size: 35px;
     -fx-text-fill: white;
 }
 
 /* สไตล์ของข้อความตัวอย่าง */
+/* styles.css */
 #sampleText {
-    -fx-font-size: 20px;
-    -fx-text-fill: white;
+    -fx-font-family: "Roboto Mono", "Vazirmatn", "monospace";
+    -fx-font-size: 18px; /* ประมาณ 1.4rem */
+    -fx-background-color: #1e1e1e; /* แทน var(--card-bg) */
+    -fx-padding: 16px; /* แทน 1rem */
+    -fx-border-color: #dbd7d7; /* แทน var(--border-color) */
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+    -fx-line-spacing: 4px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-pref-width: 800px;
+    -fx-alignment: TOP_LEFT;
 }
 
-/* สไตล์ของ TextField (ช่องพิมพ์) */
-#typingField {
-    -fx-font-size: 18px;
-    -fx-alignment: center;
-    -fx-pref-width: 250px;
+/* ✅ สไตล์ของ TextArea */
+.typing-area {
+    -fx-pref-width: 800px;
     -fx-pref-height: 40px;
+    -fx-max-height: 200px;
+    -fx-font-size: 16px;
+    -fx-text-alignment: left;
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
+
+
+
+/* ✅ ซ่อน scrollbar ทั้งแนวตั้งและแนวนอน */
+.typing-area .scroll-pane .scroll-bar:vertical,
+.typing-area .scroll-pane .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+    -fx-min-width: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+    -fx-min-height: 0;
+}
+
+
 
 /* สไตล์ของปุ่ม Start Test */
 #startButton {
-    -fx-font-size: 18px;
     -fx-background-color: #007bff;
     -fx-text-fill: white;
+    -fx-max-width: Infinity;
 }
 
 /* สไตล์ของตัวจับเวลา */
 #timerLabel {
-    -fx-font-size: 18px;
     -fx-text-fill: white;
 }
 
 /* สไตล์ของ Label ผลลัพธ์ */
-#resultLabel {
-    -fx-font-size: 18px;
-    -fx-text-fill: white;
+#resultLabelwpm {
+    -fx-padding: 8px 16px;                      /* ใกล้เคียงกับ 0.5rem 1rem */
+    -fx-background-color: #1e1e1e;             /* ใช้สีน้ำเงินสด */
+    -fx-border-color: #ccc;                     /* หรือใช้เฉดเทาอ่อน */
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1); /* box-shadow */
+    -fx-font-weight: 500;                       /* หรือ bold */
+    -fx-text-fill: white;                       /* ถ้าพื้นหลังเข้ม */
+}
+
+#resultLabelaccuracy {
+    -fx-padding: 8px 16px;                      /* ใกล้เคียงกับ 0.5rem 1rem */
+    -fx-background-color: #1e1e1e;            /* ใช้สีน้ำเงินสด */
+    -fx-border-color: #ccc;                     /* หรือใช้เฉดเทาอ่อน */
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1); /* box-shadow */
+    -fx-font-weight: 500;                       /* หรือ bold */
+    -fx-text-fill: white;                       /* ถ้าพื้นหลังเข้ม */
 }

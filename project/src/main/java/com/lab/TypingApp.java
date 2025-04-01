@@ -12,18 +12,18 @@ public class TypingApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
+
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/game.fxml")));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm()); // ✅ โหลด CSS
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
 
         primaryStage.setTitle("Typing Speed Test");
         primaryStage.setScene(scene);
-        primaryStage.setWidth(600);
-        primaryStage.setHeight(400);
-        primaryStage.setResizable(false);
+
+        primaryStage.setMaximized(true); // ✅ เปิดเต็มจอตอนเริ่ม
+
         primaryStage.show();
     }
 
