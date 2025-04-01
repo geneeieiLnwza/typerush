@@ -1,7 +1,9 @@
 package com.lab;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,51 +46,63 @@ public class GameController {
     private int lastWpm = 0;
     private int lastScore = 0;
 
-    @FXML
-    private void startTest() {
-        if (!testStarted) {
-            testStarted = true;
-            correctWords = 0;
-            totalTypedWords = 0;
-            mistakeCount = 0;
-            startTime = System.currentTimeMillis();
-            nextSentence();
-            typingField.setDisable(false);
-            typingField.setText("");
-            typingField.setPrefHeight(40); // ✅ รีเซ็ตความสูงของ TextArea
+   @FXML
+private void startTest() {
+    // 💥 Bounce animation
+    ScaleTransition bounce = new ScaleTransition(Duration.millis(100), startButton);
+    bounce.setFromX(1.0);
+    bounce.setFromY(1.0);
+    bounce.setToX(1.1);
+    bounce.setToY(1.1);
+    bounce.setAutoReverse(true);
+    bounce.setCycleCount(2);
+    bounce.play();
 
-            typingField.requestFocus();
-            timeLeft = 60;
-            timerLabel.setText("Time: " + timeLeft + "s");
-            resultLabelwpm.setText("");          
-            resultLabelaccuracy.setText("");     
+    // 🔁 Logic เดิมของการเริ่มเกม
+    if (!testStarted) {
+        testStarted = true;
+        correctWords = 0;
+        totalTypedWords = 0;
+        mistakeCount = 0;
+        startTime = System.currentTimeMillis();
+        nextSentence();
+        typingField.setDisable(false);
+        typingField.setText("");
+        typingField.setPrefHeight(40); // ✅ รีเซ็ตความสูงของ TextArea
 
-            typingField.setOnKeyReleased(e -> checkCompletion());
+        typingField.requestFocus();
+        timeLeft = 60;
+        timerLabel.setText("Time: " + timeLeft + "s");
+        resultLabelwpm.setText("");          
+        resultLabelaccuracy.setText("");     
 
-            if (timeline != null) {
-                timeline.stop();
-            }
+        typingField.setOnKeyReleased(e -> checkCompletion());
 
-            timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-                long elapsed = (System.currentTimeMillis() - startTime) / 1000;
-                timeLeft = 60 - (int) elapsed;
-
-                Platform.runLater(() -> {
-                    timerLabel.setText("Time: " + timeLeft + "s");
-                    updateResultsRealtime();
-                });
-
-                if (timeLeft <= 0) {
-                    endTest();
-                }
-            }));
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
-            startButton.setText("Restart");
-        } else {
-            restartTest();
+        if (timeline != null) {
+            timeline.stop();
         }
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            long elapsed = (System.currentTimeMillis() - startTime) / 1000;
+            timeLeft = 60 - (int) elapsed;
+
+            Platform.runLater(() -> {
+                timerLabel.setText("Time: " + timeLeft + "s");
+                updateResultsRealtime();
+            });
+
+            if (timeLeft <= 0) {
+                endTest();
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+        startButton.setText("Restart");
+    } else {
+        restartTest();
     }
+}
+
 
     private void restartTest() {
         testStarted = false;
@@ -149,20 +163,22 @@ public class GameController {
     
         for (int i = 0; i < sampleTextFlow.getChildren().size(); i++) {
             Text letter = (Text) sampleTextFlow.getChildren().get(i);
-    
+        
             if (i < typedText.length()) {
                 char typedChar = typedText.charAt(i);
                 char expectedChar = currentText.charAt(i);
-    
+        
                 if (typedChar == expectedChar) {
-                    letter.setStyle("-fx-fill: #00ff00; -fx-font-size: 18px;"); // เขียว
+                    letter.setStyle("-fx-fill: #00ff00; -fx-font-size: 18px;");
                 } else {
-                    letter.setStyle("-fx-fill: #ff4444; -fx-font-size: 18px;"); // แดง
+                    letter.setStyle("-fx-fill: #ff4444; -fx-font-size: 18px;");
+                    shakeNode(typingField); // ✅ เพิ่มตรงนี้
                 }
             } else {
                 letter.setStyle("-fx-fill: white; -fx-font-size: 18px;");
             }
         }
+        
     
         if (typedText.equals(currentText)) {
             String[] words = typedText.split("\\s+");
@@ -250,7 +266,9 @@ private void initialize() {
         typingField.setStyle("-fx-font-size: " + baseFontSize + "px;");
         startButton.setStyle("-fx-font-size: " + baseFontSize + "px;");
     });
+    startButton.setCursor(javafx.scene.Cursor.HAND); 
 }
+
 
 
     @FXML
@@ -299,5 +317,15 @@ private void initialize() {
         text.setWrappingWidth(textArea.getWidth() - 20); // เผื่อ padding
         return text.getLayoutBounds().getHeight() + 30;  // เพิ่มเผื่อ padding
     }
+
+    private void shakeNode(javafx.scene.Node node) {
+    TranslateTransition tt = new TranslateTransition(Duration.millis(50), node);
+    tt.setFromX(0);
+    tt.setByX(10);
+    tt.setCycleCount(4);
+    tt.setAutoReverse(true);
+    tt.play();
+}
+
     
 }
