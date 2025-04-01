@@ -9,6 +9,7 @@
         -fx-max-width: Infinity;
     }
 
+    
     /* สไตล์เฉพาะของ Title (Typing Speed Test) */
     #titleLabel {
         -fx-text-fill: white;
@@ -18,10 +19,14 @@
     /* styles.css */
     #sampleTextFlow {
         -fx-font-family: "Roboto Mono", "Vazirmatn", "monospace";
-        -fx-font-size: 18px; /* ประมาณ 1.4rem */
-        -fx-background-color: #1e1e1e; /* แทน var(--card-bg) */
-        -fx-padding: 16px; /* แทน 1rem */
-        -fx-border-color: #dbd7d7; /* แทน var(--border-color) */
+        -fx-font-size: 18px;
+        /* ประมาณ 1.4rem */
+        -fx-background-color: #1e1e1e;
+        /* แทน var(--card-bg) */
+        -fx-padding: 16px;
+        /* แทน 1rem */
+        -fx-border-color: #dbd7d7;
+        /* แทน var(--border-color) */
         -fx-border-width: 1px;
         -fx-border-style: solid;
         -fx-text-fill: #ffffff;
@@ -63,12 +68,13 @@
         -fx-max-height: 0;
         -fx-min-height: 0;
     }
-    #manageTextsButton{
-    -fx-background-color: #673AB7; 
-    -fx-text-fill: white;
-    -fx-border-color: #dbd7d7;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
+
+    #manageTextsButton {
+        -fx-background-color: #673AB7;
+        -fx-text-fill: white;
+        -fx-border-color: #dbd7d7;
+        -fx-background-radius: 8px;
+        -fx-border-radius: 8px;
     }
 
     /* สไตล์ของปุ่ม Start Test */
@@ -88,39 +94,53 @@
 
     /* สไตล์ของ Label ผลลัพธ์ */
     #resultLabelwpm {
-        -fx-padding: 8px 16px;                      /* ใกล้เคียงกับ 0.5rem 1rem */
-        -fx-background-color: #1e1e1e;             /* ใช้สีน้ำเงินสด */
-        -fx-border-color: #ccc;                     /* หรือใช้เฉดเทาอ่อน */
+        -fx-padding: 8px 16px;
+        /* ใกล้เคียงกับ 0.5rem 1rem */
+        -fx-background-color: #1e1e1e;
+        /* ใช้สีน้ำเงินสด */
+        -fx-border-color: #ccc;
+        /* หรือใช้เฉดเทาอ่อน */
         -fx-border-width: 1px;
         -fx-border-radius: 8px;
         -fx-background-radius: 8px;
-        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1); /* box-shadow */
-        -fx-font-weight: 500;                       /* หรือ bold */
-        -fx-text-fill: white;                       /* ถ้าพื้นหลังเข้ม */
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 0, 1);
+        /* box-shadow */
+        -fx-font-weight: 500;
+        /* หรือ bold */
+        -fx-text-fill: white;
+        /* ถ้าพื้นหลังเข้ม */
     }
 
     #resultLabelaccuracy {
-        -fx-padding: 8px 16px;                      /* ใกล้เคียงกับ 0.5rem 1rem */
-        -fx-background-color: #1e1e1e;            /* ใช้สีน้ำเงินสด */
-        -fx-border-color: #ccc;                     /* หรือใช้เฉดเทาอ่อน */
+        -fx-padding: 8px 16px;
+        /* ใกล้เคียงกับ 0.5rem 1rem */
+        -fx-background-color: #1e1e1e;
+        /* ใช้สีน้ำเงินสด */
+        -fx-border-color: #ccc;
+        /* หรือใช้เฉดเทาอ่อน */
         -fx-border-width: 1px;
         -fx-border-radius: 8px;
         -fx-background-radius: 8px;
-        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1); /* box-shadow */
-        -fx-font-weight: 500;                       /* หรือ bold */
-        -fx-text-fill: white;                       /* ถ้าพื้นหลังเข้ม */
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 0, 1);
+        /* box-shadow */
+        -fx-font-weight: 500;
+        /* หรือ bold */
+        -fx-text-fill: white;
+        /* ถ้าพื้นหลังเข้ม */
     }
+
     .root-pane {
         -fx-background-color: #1A237E;
         -fx-padding: 40px;
         -fx-background-radius: 10px;
     }
+
     /* 🟦 พื้นหลังแบบการ์ด */
     .card-pane {
         -fx-background-color: #1E1E1E;
         -fx-background-radius: 12px;
         -fx-padding: 30px;
-        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 12, 0.2, 0, 4);
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0.2, 0, 4);
     }
 
     /* 🏷️ ชื่อหัวข้อ */
@@ -162,4 +182,3 @@
         -fx-background-radius: 6px;
         -fx-border-radius: 6px;
     }
-
